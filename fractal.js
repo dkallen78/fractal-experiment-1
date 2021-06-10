@@ -1,17 +1,8 @@
-let maxHeight = window.innerHeight;
-let maxWidth = window.innerWidth;
+//let maxHeight = window.innerHeight;
+//let maxWidth = window.innerWidth;
 let canvas = makeCanvas("fracCanvas");
 const ctx = canvas.getContext("2d");
 ctx.fillStyle = "#000000";
-let sideValue = document.getElementById("sides");
-sideValue.oninput = draw;
-let ratio1Value = document.getElementById("ratio1");
-ratio1Value.oninput = draw;
-let ratio2Value = document.getElementById("ratio2");
-ratio2Value.oninput = draw;
-let dotsValue = document.getElementById("dots");
-dotsValue.oninput = draw;
-let sides, ratio1, ratio2, dots;
 
 const home = document.getElementById("frame");
 home.appendChild(canvas);
@@ -98,6 +89,26 @@ function getPoints(interval) {
   return [x, y];
 }
 
+function setInitialValues() {
+  //----------------------------------------------------//
+  //Sets the initial values of the program input to     //
+  //  their defaults                                    //
+  //----------------------------------------------------//
+
+  sideValue = document.getElementById("sides");
+  sideValue.value = 3;
+  sideValue.oninput = draw;
+  ratio1Value = document.getElementById("ratio1");
+  ratio1Value.value = 1;
+  ratio1Value.oninput = draw;
+  ratio2Value = document.getElementById("ratio2");
+  ratio2Value.value = 1;
+  ratio2Value.oninput = draw;
+  dotsValue = document.getElementById("dots");
+  dotsValue.value = 5;
+  dotsValue.oninput = draw;
+}
+
 function draw() {
   //----------------------------------------------------//
   //Gets the data from the HTML to run the program and  //
@@ -109,29 +120,34 @@ function draw() {
   sides = parseInt(sideValue.value);
   ratio1 = parseFloat(ratio1Value.value);
   ratio2 = parseFloat(ratio2Value.value);
-  dots = 10 ** parseInt(dotsValue.value);
-
+  dots = 10 ** parseFloat(dotsValue.value);
+  
+  //
+  //The interval in radians to place the initial points
   let interval = 2 / sides;
 
+  //
+  //Generates the inital points/vertices based on the
+  //  number of sides
   let points = [];
-
   for (let i = 0; i < sides; i++) {
     points[i] = getPoints(i * interval);
     makeDot(points[i]);
   }
 
-  let currentX = rnd(1, 500);
-  let currentY = rnd(1, 500);
-  let current = [currentX, currentY];
-  console.log(current);
+  //
+  //Randomly generates the first point
+  let current = [rnd(1, 500), rnd(1, 500)];
 
+  //
+  //Draws the dots
   for (let i = 0; i < dots; i++) {
-    let random = rnd(1, sides);
-    let mid;
-
-    mid = getPoint(points[random % sides], current);
-
-    current = mid;
+    newPoint = getPoint(points[rnd(1, sides) % sides], current);
+    current = newPoint;
     makeDot(current);
   }
 }
+
+setInitialValues();
+
+draw();
