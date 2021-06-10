@@ -110,6 +110,12 @@ function setInitialValues() {
   centerValue = document.getElementById("center");
   centerValue.checked = false;
   centerValue.oninput = draw;
+  rule1Value = document.getElementById("rule1");
+  rule1Value.checked = false;
+  rule1Value.oninput = draw;
+  rule2Value = document.getElementById("rule2");
+  rule2Value.checked = false;
+  rule2Value.oninput = draw;
 }
 
 function draw() {
@@ -137,6 +143,22 @@ function draw() {
     points[i] = getPoints(i * interval);
     makeDot(points[i]);
   }
+
+  if (rule2Value.checked) {
+    function getMidpoint(point1, point2) {
+      let x = (point1[0] + point2[0]) / 2;
+      let y = (point1[1] + point2[1]) / 2;
+      return [x, y];
+    }
+    let points2 = [];
+    for (let i = 0; i < points.length; i++) {
+      points2[i] = getMidpoint(points[i], points[(i + 1) % points.length]);
+      makeDot(points2[i]);
+    }
+    points = points.concat(points2);
+    sides *= 2;
+  }
+
   if (centerValue.checked) {
     points.push([250, 250]);
     makeDot(points[points.length - 1]);
@@ -150,7 +172,16 @@ function draw() {
   //
   //Draws the dots
   for (let i = 0; i < dots; i++) {
-    newPoint = getPoint(points[rnd(1, sides) % sides], current);
+    if (rule1Value.checked) {
+      while (vertex === oldVertex) {
+        vertex = rnd(1, sides);
+      }
+    } else {
+      vertex = rnd(1, sides);
+
+    }
+    oldVertex = vertex;
+    newPoint = getPoint(points[vertex % sides], current);
     current = newPoint;
     makeDot(current);
   }
