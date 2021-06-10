@@ -4,10 +4,14 @@ let canvas = makeCanvas("fracCanvas");
 const ctx = canvas.getContext("2d");
 ctx.fillStyle = "#000000";
 let sideValue = document.getElementById("sides");
+sideValue.oninput = draw;
 let ratio1Value = document.getElementById("ratio1");
+ratio1Value.oninput = draw;
 let ratio2Value = document.getElementById("ratio2");
-let sides;
-let ratio1, ratio2;
+ratio2Value.oninput = draw;
+let dotsValue = document.getElementById("dots");
+dotsValue.oninput = draw;
+let sides, ratio1, ratio2, dots;
 
 const home = document.getElementById("frame");
 home.appendChild(canvas);
@@ -103,9 +107,9 @@ function draw() {
   ctx.clearRect(0, 0, 501, 501);
 
   sides = parseInt(sideValue.value);
-
   ratio1 = parseFloat(ratio1Value.value);
   ratio2 = parseFloat(ratio2Value.value);
+  dots = 10 ** parseInt(dotsValue.value);
 
   let interval = 2 / sides;
 
@@ -121,7 +125,7 @@ function draw() {
   let current = [currentX, currentY];
   console.log(current);
 
-  for (let i = 0; i < 100000; i++) {
+  for (let i = 0; i < dots; i++) {
     let random = rnd(1, sides);
     let mid;
 
