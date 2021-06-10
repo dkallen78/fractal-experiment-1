@@ -7,7 +7,7 @@ from Numberphile. The basic idea is this:
 * Draw a point at random
 * Draw another point halfway between the original point and a random vertex
 * Draw another point halfway between this new point and another randomly chosen vertex
-Repeat ad nauseum
+* Repeat ad nauseum
 
 The result is the Sierpiński triangle
 
