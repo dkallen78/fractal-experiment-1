@@ -73,6 +73,23 @@ function getPoint(point1, point2) {
   return [x, y];
 }
 
+function getMidpoint(point1, point2) {
+  //----------------------------------------------------//
+  //Calculates the midpoint of a line segment           //
+  //----------------------------------------------------//
+  //point1(array of integers)-> coordinates of first    //
+  //  point                                             //
+  //point2(array of integers)-> coordinates of second   //
+  //  point                                             //
+  //----------------------------------------------------//
+  //return(array of integers)-> coordinates of midpoint //
+  //----------------------------------------------------//
+
+  let x = (point1[0] + point2[0]) / 2;
+  let y = (point1[1] + point2[1]) / 2;
+  return [x, y];
+}
+
 function getPoints(interval) {
   //----------------------------------------------------//
   //Gets the initial points used for plotting the other //
@@ -116,6 +133,9 @@ function setInitialValues() {
   rule2Value = document.getElementById("rule2");
   rule2Value.checked = false;
   rule2Value.oninput = draw;
+  rule3Value = document.getElementById("rule3");
+  rule3Value.checked = false;
+  rule3Value.oninput = draw;
 }
 
 function draw() {
@@ -144,12 +164,9 @@ function draw() {
     makeDot(points[i]);
   }
 
+  //
+  //Adds the midpoints of the sides to the vertices
   if (rule2Value.checked) {
-    function getMidpoint(point1, point2) {
-      let x = (point1[0] + point2[0]) / 2;
-      let y = (point1[1] + point2[1]) / 2;
-      return [x, y];
-    }
     let points2 = [];
     for (let i = 0; i < points.length; i++) {
       points2[i] = getMidpoint(points[i], points[(i + 1) % points.length]);
@@ -159,6 +176,8 @@ function draw() {
     sides *= 2;
   }
 
+  //
+  //Adds the center point to the vertices
   if (centerValue.checked) {
     points.push([250, 250]);
     makeDot(points[points.length - 1]);
@@ -172,14 +191,28 @@ function draw() {
   //
   //Draws the dots
   for (let i = 0; i < dots; i++) {
-    if (rule1Value.checked) {
+    vertex = rnd(1, sides);
+
+    //
+    //Prevents the same vertex from being moved to
+    //  twice in a row
+    /*if (rule1Value.checked) {
       while (vertex === oldVertex) {
         vertex = rnd(1, sides);
       }
     } else {
       vertex = rnd(1, sides);
+    }*/
 
+    if (rule3Value.checked) {
+      if (rule1Value.checked) {
+
+      }
+      while ((vertex + 1) % sides === (oldVertex % sides)) {
+        vertex = rnd(1, sides);
+      }
     }
+
     oldVertex = vertex;
     newPoint = getPoint(points[vertex % sides], current);
     current = newPoint;
