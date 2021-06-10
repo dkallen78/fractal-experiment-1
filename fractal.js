@@ -107,6 +107,9 @@ function setInitialValues() {
   dotsValue = document.getElementById("dots");
   dotsValue.value = 5;
   dotsValue.oninput = draw;
+  centerValue = document.getElementById("center");
+  centerValue.checked = false;
+  centerValue.oninput = draw;
 }
 
 function draw() {
@@ -121,7 +124,7 @@ function draw() {
   ratio1 = parseFloat(ratio1Value.value);
   ratio2 = parseFloat(ratio2Value.value);
   dots = 10 ** parseFloat(dotsValue.value);
-  
+
   //
   //The interval in radians to place the initial points
   let interval = 2 / sides;
@@ -133,6 +136,11 @@ function draw() {
   for (let i = 0; i < sides; i++) {
     points[i] = getPoints(i * interval);
     makeDot(points[i]);
+  }
+  if (centerValue.checked) {
+    points.push([250, 250]);
+    makeDot(points[points.length - 1]);
+    sides++;
   }
 
   //
