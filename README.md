@@ -1,12 +1,12 @@
 # fractal-experiment-1
 
-This program is based on this (https://www.youtube.com/watch?v=kbKtFN71Lfs) video
+This program is based on [this](https://www.youtube.com/watch?v=kbKtFN71Lfs) video
 from Numberphile. The basic idea is this:
 
-*Draw three points (my program uses the vertices of an invisible equilateral triangle)
-*Draw a point at random
-*Draw another point halfway between the original point and a random vertex
-*Draw another point halfway between this new point and another randomly chosen vertex
+* Draw three points (my program uses the vertices of an invisible equilateral triangle)
+* Draw a point at random
+* Draw another point halfway between the original point and a random vertex
+* Draw another point halfway between this new point and another randomly chosen vertex
 Repeat ad nauseum
 
 The result is the Sierpiński triangle
