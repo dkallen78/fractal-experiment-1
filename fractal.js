@@ -203,11 +203,15 @@ function draw() {
     } else {
       vertex = rnd(1, sides);
     }*/
-
-    if (rule3Value.checked) {
-      if (rule1Value.checked) {
-
+    /*if (rule1Value.checked && rule3Value.checked) {
+      while (((vertex - 1) % sides === (oldVertex % sides)) && ((vertex + 1) % sides === (oldVertex % sides))) {
+        vertex = rnd(1, sides);
       }
+    } else*/ if (rule1Value.checked) {
+      while (vertex === oldVertex) {
+        vertex = rnd(1, sides);
+      }
+    } else if (rule3Value.checked) {
       while ((vertex + 1) % sides === (oldVertex % sides)) {
         vertex = rnd(1, sides);
       }
